@@ -1,3 +1,7 @@
 from django.shortcuts import render
+from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
+def main(request):
+	return HttpResponse("")
+ 	#return HttpResponse("Name: Sahsko Surname: Lykhenko")
