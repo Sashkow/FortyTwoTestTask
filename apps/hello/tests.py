@@ -8,5 +8,6 @@ class SomeTests(TestCase):
 
 class MainViewTests(TestCase):
 	def testMainViewShowsUserInfo(self):
+		self.client.login(username='sahsko', password='poland')
 		response = self.client.get(reverse('main'))
-		self.assertContains(response,"Name: Sahsko Surname: Lykhenko")
+		self.assertContains(response,"Name: Olexnadr Surname: Lykhenko")
