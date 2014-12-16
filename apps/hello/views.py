@@ -3,5 +3,4 @@ from django.http import HttpResponse, HttpResponseRedirect
 
 # Create your views here.
 def main(request):
-	return HttpResponse("")
- 	#return HttpResponse("Name: Sahsko Surname: Lykhenko")
+ 	return HttpResponse("Name: Sahsko Surname: Lykhenko")
