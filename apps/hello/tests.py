@@ -33,12 +33,15 @@ class MainViewTests(TestCase):
 		c.login(username='sashko', password='poland')
 		response = c.get(reverse('main'))
 		self.assertContains(response,"Name: Olexandr")
-		self.assertContains(response,"Surname: Lykhenko")
-		self.assertContains(response,"Birth date: "+str(date(1991, 1, 2))) 
-		self.assertContains(response,"Bio: Born") 
+		self.assertContains(response,"Last name: Lykhenko")
+		self.assertContains(response,"Date of birth: Jan. 2, 1991") 
+		self.assertContains(response,"Bio:")
+		self.assertContains(response,"Lorem ipsum")
 		self.assertContains(response,"Jabber: sashko@jabber") 
-		self.assertContains(response,"Skype:") 
-		self.assertContains(response,"Other contacts: contacts") 
+		self.assertContains(response,"Skype: someSkypeId") 
+		self.assertContains(response,"Other contacts:")
+		self.assertContains(response,"facebook.com")
+
 		
 
 	
