@@ -9,5 +9,7 @@ def main(request):
 	u = User.objects.get(id=userLazySimpleObject.id)
 
 	return HttpResponse( \
-		"Name: {name} Surname: {surname} Email: {email}". \
-		format(name = u.first_name,surname = u.last_name, email = u.email))
+		"Name: {name} <br> Surname: {surname} <br> Email: {email} <br> \
+		 Birth date: {bd} <br> Bio: {bio} <br> Jabber: {j} <br> Skype: {s} <br> Other contacts: {othr}". \
+		format(name = u.first_name,surname = u.last_name, email = u.email, \
+		 bd=u.userprofile.birth_date, bio = u.userprofile.bio, j=u.userprofile.jabber, s=u.userprofile.skype, othr=u.userprofile.other_contacts))
