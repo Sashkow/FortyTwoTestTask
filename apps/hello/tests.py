@@ -32,8 +32,8 @@ class MainViewTests(TestCase):
 		up = UserProfile.objects.get(user=u)
 		self.assertEquals(hasattr(u,'userprofile'),True)
 		self.assertEquals(hasattr(u.userprofile, 'bio'),True)
-		# self.assertEquals(hasattr(u, 'jabber',True))
-		# self.assertEquals(hasattr(u, 'skype',True))
-		# self.assertEquals(hasattr(u, 'other_contacts',True))
-		# self.assertEquals(hasattr(u, 'birth_date',True))
+		self.assertEquals(hasattr(u.userprofile, 'jabber'),True)
+		self.assertEquals(hasattr(u.userprofile, 'skype'),True)
+		self.assertEquals(hasattr(u.userprofile, 'other_contacts'),True)
+		self.assertEquals(hasattr(u.userprofile, 'birth_date'),True)
 
