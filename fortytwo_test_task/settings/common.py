@@ -126,3 +126,6 @@ TEMPLATE_DIRS = (
 
 # Turn off south during test
 SOUTH_TESTS_MIGRATE = False
+
+
+# AUTH_PROFILE_MODULE = 'apps.hello.models.UserProfile'
