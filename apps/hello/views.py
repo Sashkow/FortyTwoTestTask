@@ -17,7 +17,7 @@ def main(request):
 	except User.DoesNotExist:
 		print "Handling unauthorized user", User.DoesNotExist
 	finally:
-		u = authenticate(username='sashko', password='poland')
+		u = authenticate(username='admin', password='admin')
 		login(request, u)
 
 	template_name = 'hello/index.html'
