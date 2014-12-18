@@ -4,11 +4,21 @@ from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 from django.contrib.auth.models import User
 
+from django.contrib.auth import authenticate, login
+
+# from django.core.exceptions import DoesNotExist
+
 
 # Create your views here.
 def main(request):
  	userLazySimpleObject = request.user 
-	u = User.objects.get(id=userLazySimpleObject.id)
+ 	try:
+ 		u = User.objects.get(id=userLazySimpleObject.id)
+	except User.DoesNotExist:
+		print "Handling unauthorized user", User.DoesNotExist
+	finally:
+		u = authenticate(username='sashko', password='poland')
+		login(request, u)
 
 	template_name = 'hello/index.html'
 
