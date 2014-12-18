@@ -19,7 +19,7 @@ class MainViewTests(TestCase):
 		# self.gen_stubs()
 
 	def testUserHasNeededProfileAttributes(self):
-		u = User.objects.get(username='sashko')
+		u = User.objects.get(username='admin')
 		up = UserProfile.objects.get(user=u)
 		self.assertEquals(hasattr(u,'userprofile'),True)
 		self.assertEquals(hasattr(u.userprofile, 'bio'),True)
@@ -30,10 +30,10 @@ class MainViewTests(TestCase):
 		
 	def testMainViewShowsUserInfo(self):
 		c = Client()
-		c.login(username='sashko', password='poland')
+		c.login(username='admin', password='admin')
 		response = c.get(reverse('main'))
-		self.assertContains(response,"Name: Olexandr")
-		self.assertContains(response,"Last name: Lykhenko")
+		self.assertContains(response,"Name: Lykhenko")
+		self.assertContains(response,"Last name: Olexandr")
 		self.assertContains(response,"Date of birth: Jan. 2, 1991") 
 		self.assertContains(response,"Bio:")
 		self.assertContains(response,"Lorem ipsum")
