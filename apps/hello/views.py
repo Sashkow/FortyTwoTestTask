@@ -16,15 +16,12 @@ def main(request):
  		u = User.objects.get(id=userLazySimpleObject.id)
 	except User.DoesNotExist:
 		print "Handling unauthorized user", User.DoesNotExist
-	finally:
 		u = authenticate(username='admin', password='admin')
 		login(request, u)
-
-	template_name = 'hello/index.html'
-
-	context = {'u': u}
-
-	return render(request,template_name,context)
+	finally:
+		template_name = 'hello/index.html'
+		context = {'u': u}
+		return render(request,template_name,context)
 
 	# return HttpResponse( \
 	# 	"Name: {name} <br> Surname: {surname} <br> Email: {email} <br> \
