@@ -128,4 +128,6 @@ TEMPLATE_DIRS = (
 SOUTH_TESTS_MIGRATE = False
 
 
-# AUTH_PROFILE_MODULE = 'apps.hello.models.UserProfile'
+FIXTURE_DIRS = (
+    os.path.join(BASE_DIR, 'apps/hello/fixtures'),
+    )
