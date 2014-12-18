@@ -125,7 +125,7 @@ TEMPLATE_DIRS = (
 )
 
 # Turn off south during test
-SOUTH_TESTS_MIGRATE = False
+SOUTH_TESTS_MIGRATE = True
 
 
 FIXTURE_DIRS = (
