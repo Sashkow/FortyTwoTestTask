@@ -2,13 +2,12 @@ from django.db import models
 
 from django.contrib.auth.models import User
 
-from django.utils import timezone
 
 class UserProfile(models.Model):
-	user = models.OneToOneField(User)
+    user = models.OneToOneField(User)
 
-	bio = models.TextField(null=True,blank=True)
-	birth_date = models.DateField(null=True,blank=True)
-	jabber = models.CharField(max_length=50, null=True,blank=True)
-	skype = models.CharField(max_length=50, null=True,blank=True)
-	other_contacts = models.TextField(null=True,blank=True)
+    bio = models.TextField(null=True, blank=True)
+    birth_date = models.DateField(null=True, blank=True)
+    jabber = models.CharField(max_length=50, null=True, blank=True)
+    skype = models.CharField(max_length=50, null=True, blank=True)
+    other_contacts = models.TextField(null=True, blank=True)

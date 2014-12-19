@@ -1,46 +1,44 @@
+{% extends "base.html" %}
 
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Main page</title>
-</head>
-<style type="text/css">
-	.left {
-	    float: left;
-	    width: 50%;
-	    padding: 10px;
-	}
+{% block pagetitle %} Main Page {% endblock %}
 
-	.right {
-	    margin-left: 50%;
-	    border: 3px;
-	    padding: 10px;
-	}
+{% block csslinks %} 
+    <style type="text/css">
+	    .left {
+	        float: left;
+	        width: 50%;
+	        padding: 10px;
+	    }
 
-	pre
-	{
-		font-family: times;
-		white-space: pre;
-		margin: 1em 0px;	
-	}
-	
-</style>
-<body>
-<h1>42 Coffee Cups Test Assignment</h1>
-	<div class="left">
-    	<div>Name: {{u.first_name}}</div>
-    	<div>Last name: {{u.last_name}}</div>
-    	<div>Date of birth: {{u.userprofile.birth_date}}</div>
-    	<div>Bio: <pre>{{u.userprofile.bio}}</pre></div>
-	</div>
-	<div class="right">
-		<div>Contacts</div>
-	    <div>Email: {{u.email}}</div>
-    	<div>Jabber: {{u.userprofile.jabber}}</div>
-    	<div>Skype: {{u.userprofile.skype}}</div>
-    	<div>Other contacts: <pre>{{u.userprofile.other_contacts}}</pre></div>
-	</div>
-</body>
-</html>
+	    .right {
+	        margin-left: 50%;
+	        border: 3px;
+	        padding: 10px;
+	    }
+
+	    pre
+	    {
+	        font-family: "Times New Roman";
+	        font-size: 16px;
+	        white-space: pre;
+	        margin: 1em 0px;    
+	    }    
+    </style>
+{% endblock %}
 
 
+{% block content %}
+    <div class="left">
+        <div>Name: {{u.first_name}}</div>
+        <div>Last name: {{u.last_name}}</div>
+        <div>Date of birth: {{u.userprofile.birth_date}}</div>
+        <div>Bio: <pre>{{u.userprofile.bio}}</pre></div>
+    </div>
+    <div class="right">
+        <div>Contacts</div>
+        <div>Email: {{u.email}}</div>
+        <div>Jabber: {{u.userprofile.jabber}}</div>
+        <div>Skype: {{u.userprofile.skype}}</div>
+        <div>Other contacts: <pre>{{u.userprofile.other_contacts}}</pre></div>
+    </div>
+{% endblock %}
