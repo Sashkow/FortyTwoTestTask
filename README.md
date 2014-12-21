@@ -7,7 +7,9 @@
 * virtualenv --no-site-packages .env
 * source .env/bin/activate
 * .env/bin/pip install -r requirements.txt
+* python manage.py syncdb --no-input
 * **./manage.py migrate**
+**and once again:**
 * python manage.py syncdb --no-input
 
 
