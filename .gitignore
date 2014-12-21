@@ -16,3 +16,7 @@ media
 
 venv
 .venv
+.env
+env
+
+.bak
