@@ -1,14 +1,14 @@
 42-test template
 ===========================
-Install Instructions 
+###Install Instructions 
 
-$ git clone https://github.com/Sashkow/FortyTwoTestTask.git
-$ cd FortyTwoTestTask
-$ virtualenv --no-site-packages .env
-$ source .env/bin/activate
-$ .env/bin/pip install -r requirements.txt
-**$ ./manage.py migrate**
-$ python manage.py syncdb --no-input
+* git clone https://github.com/Sashkow/FortyTwoTestTask.git
+* cd FortyTwoTestTask
+* virtualenv --no-site-packages .env
+* source .env/bin/activate
+* .env/bin/pip install -r requirements.txt
+* **./manage.py migrate**
+* python manage.py syncdb --no-input
 
 
 
