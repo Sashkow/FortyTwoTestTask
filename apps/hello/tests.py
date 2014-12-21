@@ -3,6 +3,7 @@ from django.core.urlresolvers import reverse
 from django.test import Client
 from django.contrib.auth.models import User
 
+from django.conf import settings
 
 # Create your tests here.
 
@@ -31,3 +32,11 @@ class MainViewTests(TestCase):
         self.assertContains(response, "Skype: someSkypeId")
         self.assertContains(response, "Other contacts:")
         self.assertContains(response, "facebook.com")
+
+class RequestsToDataBaseTests(TestCase):
+    def testRequestsToDataBaseExists(self):
+        self.assertEquals('MIDDLEWARE_CLASSES'in dir(settings),True)
+        self.assertEquals('apps.hello.middleware.RequestsToDataBase' \
+         in settings.MIDDLEWARE_CLASSES,True)
+
+

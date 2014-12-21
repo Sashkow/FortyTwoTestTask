@@ -11,3 +11,7 @@ class UserProfile(models.Model):
     jabber = models.CharField(max_length=50, null=True, blank=True)
     skype = models.CharField(max_length=50, null=True, blank=True)
     other_contacts = models.TextField(null=True, blank=True)
+
+class RequestInfo(models.Model):
+	pickled_request = models.TextField()
+
