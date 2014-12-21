@@ -15,3 +15,4 @@ media
 *.dat
 
 venv
+.venv
