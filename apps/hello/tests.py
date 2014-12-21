@@ -4,6 +4,7 @@ from django.test import Client
 from django.contrib.auth.models import User
 
 from django.conf import settings
+from models import RequestInfo
 
 # Create your tests here.
 
@@ -38,5 +39,17 @@ class RequestsToDataBaseTests(TestCase):
         self.assertEquals('MIDDLEWARE_CLASSES'in dir(settings),True)
         self.assertEquals('apps.hello.middleware.RequestsToDataBase' \
          in settings.MIDDLEWARE_CLASSES,True)
+
+    def testRequestInfoModelUpdates(self):
+        #count objects in RequestInfo model
+        #simulate request to root page
+        #count objects in RequestInfo model
+        #check if amount increased by one
+        initialObjectsCount = int(RequestInfo.objects.count())
+        c = Client()
+        c.get(reverse('main'))
+        newObjectsCount = int(RequestInfo.objects.count())
+        self.assertEquals(newObjectsCount - initialObjectsCount == 1, True)
+
 
 
