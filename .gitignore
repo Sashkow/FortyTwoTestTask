@@ -19,4 +19,4 @@ venv
 .env
 env
 
-.bak
+*.bak
