@@ -1,11 +1,16 @@
 from django.test import TestCase
+
 from django.core.urlresolvers import reverse
 from django.test import Client
 from django.contrib.auth.models import User
 
+from django.test.client import RequestFactory
 from django.conf import settings
 from models import RequestInfo
+from middleware import RequestsToDataBase
 
+
+import pickle
 # Create your tests here.
 
 class MainViewTests(TestCase):
@@ -36,7 +41,7 @@ class MainViewTests(TestCase):
 
 class RequestsToDataBaseTests(TestCase):
     def testRequestsToDataBaseExists(self):
-        self.assertEquals('MIDDLEWARE_CLASSES'in dir(settings),True)
+        self.assertEquals('MIDDLEWARE_CLASSES' in dir(settings), True)
         self.assertEquals('apps.hello.middleware.RequestsToDataBase' \
          in settings.MIDDLEWARE_CLASSES,True)
 
@@ -49,7 +54,19 @@ class RequestsToDataBaseTests(TestCase):
         c = Client()
         c.get(reverse('main'))
         newObjectsCount = int(RequestInfo.objects.count())
-        self.assertEquals(newObjectsCount - initialObjectsCount == 1, True)
+        self.assertEquals(newObjectsCount - initialObjectsCount, 1)
 
+    def setUp(self):
+        self.factory = RequestFactory()
 
+    def testRequestInfoModelUpdatesWithCorrectData(self):
+        c = Client()
+        request = self.factory.get(reverse('main'))
+        rtb = RequestsToDataBase()
+        rtb.process_request(request)
+        requestToDB = pickle.dumps(request.REQUEST)
+        
+        ri = RequestInfo.objects.latest('pub_date')
+        requestFromDB = ri.pickled_request
 
+        self.assertEquals(requestToDB, requestFromDB)        
