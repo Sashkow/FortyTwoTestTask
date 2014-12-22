@@ -1,4 +1,5 @@
 from django.shortcuts import render
+from django.http import HttpResponse
 from django.contrib.auth.models import User
 
 from django.contrib.auth import authenticate, login
@@ -19,3 +20,6 @@ def main(request):
         template_name = 'hello/index.html'
         context = {'u': u}
         return render(request, template_name, context)
+
+def showFirstRequests(request):
+    return HttpResponse(status=404)

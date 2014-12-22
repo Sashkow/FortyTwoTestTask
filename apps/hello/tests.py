@@ -60,7 +60,6 @@ class RequestsToDataBaseTests(TestCase):
         self.factory = RequestFactory()
 
     def testRequestInfoModelUpdatesWithCorrectData(self):
-        c = Client()
         request = self.factory.get(reverse('main'))
         rtb = RequestsToDataBase()
         rtb.process_request(request)
@@ -70,3 +69,9 @@ class RequestsToDataBaseTests(TestCase):
         requestFromDB = ri.pickled_request
 
         self.assertEquals(requestToDB, requestFromDB)        
+
+    def testExistsShowFirstRequests(self):
+        c = Client()
+        response = c.get(reverse('show-first-requests'))
+        self.assertEquals(response.status_code, 200)
+
