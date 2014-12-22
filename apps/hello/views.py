@@ -22,4 +22,4 @@ def main(request):
         return render(request, template_name, context)
 
 def showFirstRequests(request):
-    return HttpResponse(status=404)
+    return HttpResponse("")
