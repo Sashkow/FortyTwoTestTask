@@ -1,3 +1,4 @@
+"""tests"""
 from django.test import TestCase
 
 from django.core.urlresolvers import reverse
@@ -6,12 +7,13 @@ from django.contrib.auth.models import User
 
 from django.test.client import RequestFactory
 from django.conf import settings
-from models import RequestInfo
-from middleware import RequestsToDataBase
+from apps.hello.models import RequestInfo
+from apps.hello.middleware import RequestsToDataBase
 
 
 import pickle
 # Create your tests here.
+
 
 class MainViewTests(TestCase):
     fixtures = ['hello_main_view_testdata.json']
@@ -39,13 +41,14 @@ class MainViewTests(TestCase):
         self.assertContains(response, "Other contacts:")
         self.assertContains(response, "facebook.com")
 
+
 class RequestsToDataBaseTestsMoreThanTenRecords(TestCase):
-    fixtures =['middleware_testing_data_15_records.json']
+    fixtures = ['middleware_testing_data_15_records.json']
 
     def testRequestsToDataBaseExists(self):
         self.assertEquals('MIDDLEWARE_CLASSES' in dir(settings), True)
         self.assertEquals('apps.hello.middleware.RequestsToDataBase' \
-         in settings.MIDDLEWARE_CLASSES,True)
+         in settings.MIDDLEWARE_CLASSES, True)
 
     def testRequestInfoModelUpdates(self):
         #count objects in RequestInfo model
@@ -66,11 +69,11 @@ class RequestsToDataBaseTestsMoreThanTenRecords(TestCase):
         rtb = RequestsToDataBase()
         rtb.process_request(request)
         requestToDB = pickle.dumps(request.REQUEST)
-        
+
         ri = RequestInfo.objects.latest('pub_date')
         requestFromDB = ri.pickled_request
 
-        self.assertEquals(requestToDB, requestFromDB)        
+        self.assertEquals(requestToDB, requestFromDB)
 
     def testExistsShowFirstRequests(self):
         c = Client()
@@ -79,9 +82,11 @@ class RequestsToDataBaseTestsMoreThanTenRecords(TestCase):
 
     def testShowFirstRequestsViewsDataCorrectly(self):
         c = Client()
-        response = c.get(reverse('show-first-requests'))    
+        response = c.get(reverse('show-first-requests'))
         self.assertContains(response, "1. 2014-12-22 16:19:56")
-        self.assertEquals(str(response).count('<p class="request_record">'),10)
+        self.assertEquals( \
+            str(response).count('<p class="request_record">'), 10)
+
 
 class RequestsToDataBaseTestsLessThanTenRecords(TestCase):
     fixtures = ['middleware_testing_data_5_records.json']
@@ -90,7 +95,9 @@ class RequestsToDataBaseTestsLessThanTenRecords(TestCase):
         c = Client()
         response = c.get(reverse('show-first-requests'))    
         self.assertContains(response, "1. 2014-12-23 11:52:17")
-        self.assertEquals(str(response).count('<p class="request_record">'),7) #more records added while getting response
+        #more records added while getting response, so 7, not 5
+        self.assertEquals( \
+            str(response).count('<p class="request_record">'), 7) 
 
 #impossible to reach
 # class RequestsToDataBaseTestsNoRecords(TestCase):

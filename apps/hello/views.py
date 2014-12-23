@@ -22,8 +22,9 @@ def main(request):
         context = {'u': u}
         return render(request, template_name, context)
 
+
 def showFirstRequests(request):
     template_name = 'hello/firstrequests.html'
-    requests=RequestInfo.objects.all()[:10]
+    requests = RequestInfo.objects.all()[:10]
     context = {'requests': requests}
     return render(request, template_name, context)
