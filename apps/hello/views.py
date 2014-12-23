@@ -1,8 +1,9 @@
 from django.shortcuts import render
 from django.http import HttpResponse
 from django.contrib.auth.models import User
-
+from models import RequestInfo
 from django.contrib.auth import authenticate, login
+
 
 # from django.core.exceptions import DoesNotExist
 
@@ -22,4 +23,7 @@ def main(request):
         return render(request, template_name, context)
 
 def showFirstRequests(request):
-    return HttpResponse("")
+    template_name = 'hello/firstrequests.html'
+    requests=RequestInfo.objects.all()[:10]
+    context = {'requests': requests}
+    return render(request, template_name, context)

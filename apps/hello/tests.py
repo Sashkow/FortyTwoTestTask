@@ -39,7 +39,9 @@ class MainViewTests(TestCase):
         self.assertContains(response, "Other contacts:")
         self.assertContains(response, "facebook.com")
 
-class RequestsToDataBaseTests(TestCase):
+class RequestsToDataBaseTestsMoreThanTenRecords(TestCase):
+    fixtures =['middleware_testing_data_15_records.json']
+
     def testRequestsToDataBaseExists(self):
         self.assertEquals('MIDDLEWARE_CLASSES' in dir(settings), True)
         self.assertEquals('apps.hello.middleware.RequestsToDataBase' \
@@ -74,4 +76,28 @@ class RequestsToDataBaseTests(TestCase):
         c = Client()
         response = c.get(reverse('show-first-requests'))
         self.assertEquals(response.status_code, 200)
+
+    def testShowFirstRequestsViewsDataCorrectly(self):
+        c = Client()
+        response = c.get(reverse('show-first-requests'))    
+        self.assertContains(response, "1. 2014-12-22 16:19:56")
+        self.assertEquals(str(response).count('<p class="request_record">'),10)
+
+class RequestsToDataBaseTestsLessThanTenRecords(TestCase):
+    fixtures = ['middleware_testing_data_5_records.json']
+
+    def testShowFirstRequestsViewsDataCorrectlyLessThanTenRecords(self):
+        c = Client()
+        response = c.get(reverse('show-first-requests'))    
+        self.assertContains(response, "1. 2014-12-22 16:19:56")
+        self.assertEquals(str(response).count('<p class="request_record">'),5)
+
+class RequestsToDataBaseTestsNoRecords(TestCase):
+
+    def testShowFirstRequestsViewsDataCorrectlyNoRecords(self):
+        c = Client()
+        response = c.get(reverse('show-first-requests'))    
+        self.assertContains(response, "No records available")
+
+
 

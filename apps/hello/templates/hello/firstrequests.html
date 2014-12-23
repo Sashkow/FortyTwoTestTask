@@ -1,0 +1,22 @@
+{% extends "base.html" %}
+
+{% block pagetitle %} First Ten Requests {% endblock %}
+
+{% block csslinks %} 
+{% endblock %}
+
+{% block title %}
+    First ten requests that are stored by middleware
+{% endblock %}
+
+{% block content %}
+
+    {% if requests %}
+        {% for r in requests %}
+            <p class="request_record">{{forloop.counter}}. {{r}}</p>
+        {% endfor %}
+    {% else %}
+        <p>No requests are available.</p>
+    {% endif %}
+
+{% endblock %}

@@ -17,5 +17,5 @@ class RequestInfo(models.Model):
 	pub_date = models.DateTimeField('date published', default=timezone.now())
 
 	def __str__(self):
-		return str(self.pub_date)+" "+str(self.pickled_request)[:10]+"..."
+		return str(self.pub_date)+" "+str(self.pickled_request)[:100]+"..."
 
