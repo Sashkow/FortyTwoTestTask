@@ -35,7 +35,7 @@ def showFirstRequests(request):
 
 def addDjangoSettingscontextProcessor(request):
     return {
-        'django_settings': 'settings',
+        'django_settings': settings,
     }
 
 def showDjangoSettings(request):
