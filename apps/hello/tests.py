@@ -7,12 +7,15 @@ from django.contrib.auth.models import User
 
 from django.test.client import RequestFactory
 from django.conf import settings
-from apps.hello.models import RequestInfo
+from apps.hello.models import RequestInfo, UserProfile
 from apps.hello.middleware import RequestsToDataBase
 
 from django.conf import settings
+from django.utils.functional import LazyObject
 
 import pickle
+
+
 # Create your tests here.
 
 
@@ -111,8 +114,18 @@ class ContextProcessorTests(TestCase):
 
 
 class EditFormTests(TestCase):
+    fixtures = ['hello_main_view_testdata.json']
+
     def testEditUserInfoResponds(self):
         c = Client()
         response = c.get(reverse('edit-user-info'))
         self.assertEquals(response.status_code, 200)
+
+    def testEditUserInfoContainsContextData(self):
+        c = Client()
+        c.login(username='admin', password='admin')
+        response = c.get(reverse('show-django-settings'))    
+        self.assertEquals('user' in response.context, True)
+        u = User()
+        self.assertEquals(isinstance(response.context['user'],LazyObject),True)
         
