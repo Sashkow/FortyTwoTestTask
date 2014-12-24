@@ -1,0 +1,10 @@
+{% extends "base.html" %}
+
+{% block pagetitle %} Django settings retreived from context processor {% endblock %}
+
+{% block csslinks %}     
+{% endblock %}
+
+{% block content %}
+    {{django_settings}}
+{% endblock %}

@@ -10,6 +10,7 @@ from django.conf import settings
 from apps.hello.models import RequestInfo
 from apps.hello.middleware import RequestsToDataBase
 
+from django.conf import settings
 
 import pickle
 # Create your tests here.
@@ -99,14 +100,11 @@ class RequestsToDataBaseTestsLessThanTenRecords(TestCase):
         self.assertEquals( \
             str(response).count('<p class="request_record">'), 7) 
 
-#impossible to reach
-# class RequestsToDataBaseTestsNoRecords(TestCase):
 
-#     def testShowFirstRequestsViewsDataCorrectlyNoRecords(self):
-#         c = Client()
-#         response = c.get(reverse('show-first-requests'))    
-#         print response
-#         self.assertContains(response, "No records available")
-
-
-
+class ContextProcessorTests(TestCase):
+    def testContextProcessorRuns(self):
+        c = Client()
+        response = c.get(reverse('show-django-settings'))    
+        self.assertEquals('django_settings' in response.context, True)
+        self.assertEquals(type(response.context['django_settings']), \
+            type(settings))

@@ -4,6 +4,10 @@ from django.contrib.auth.models import User
 from models import RequestInfo
 from django.contrib.auth import authenticate, login
 
+from django.conf import settings
+from django.template import loader
+from django.template import RequestContext, Context
+
 
 # from django.core.exceptions import DoesNotExist
 
@@ -28,3 +32,16 @@ def showFirstRequests(request):
     requests = RequestInfo.objects.all()[:10]
     context = {'requests': requests}
     return render(request, template_name, context)
+
+def addDjangoSettingscontextProcessor(request):
+    return {
+        # 'django_settings': settings,
+    }
+
+def showDjangoSettings(request):
+    template_name = 'hello/showdjangosettings.html'
+    c = RequestContext(request, {}, \
+        processors=[addDjangoSettingscontextProcessor])
+    
+    return render(request,template_name,c)
+
