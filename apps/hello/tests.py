@@ -108,3 +108,11 @@ class ContextProcessorTests(TestCase):
         self.assertEquals('django_settings' in response.context, True)
         self.assertEquals(type(response.context['django_settings']), \
             type(settings))
+
+
+class EditFormTests(TestCase):
+    def testEditUserInfoResponds(self):
+        c = Client()
+        response = c.get(reverse('edit-user-info'))
+        self.assertEquals(response.status_code, 200)
+        

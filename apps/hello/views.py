@@ -45,3 +45,5 @@ def showDjangoSettings(request):
     
     return render(request,template_name,c)
 
+def editUserInfo(request):
+    return HttpResponse("", status=404)
