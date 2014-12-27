@@ -22,4 +22,7 @@
         <div>Skype: {{u.userprofile.skype}}</div>
         <div>Other contacts: <pre>{{u.userprofile.other_contacts}}</pre></div>
     </div>
+    <div>
+        <a href="{% url 'edit-user-info' %}" name="edit_page_link">Edit this content</a>
+    </div>
 {% endblock %}
