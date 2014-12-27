@@ -9,14 +9,18 @@ from django.test.client import RequestFactory
 from django.conf import settings
 from apps.hello.models import RequestInfo, UserProfile
 from apps.hello.middleware import RequestsToDataBase
+from apps.hello.forms import UserProfileMultiForm
 
 from django.conf import settings
 from django.utils.functional import LazyObject
 
 import pickle
 
+from betterforms.multiform import MultiModelForm
 
 # Create your tests here.
+
+
 
 
 class MainViewTests(TestCase):
@@ -112,20 +116,58 @@ class ContextProcessorTests(TestCase):
         self.assertEquals(type(response.context['django_settings']), \
             type(settings))
 
-
+# Create page with a form that allows to edit data, presented on the main page
 class EditFormTests(TestCase):
     fixtures = ['hello_main_view_testdata.json']
 
-    def testEditUserInfoResponds(self):
+    def testPageLoads(self):
         c = Client()
         response = c.get(reverse('edit-user-info'))
         self.assertEquals(response.status_code, 200)
 
-    def testEditUserInfoContainsContextData(self):
+    def testContextLoads(self):
         c = Client()
         c.login(username='admin', password='admin')
-        response = c.get(reverse('show-django-settings'))    
-        self.assertEquals('user' in response.context, True)
-        u = User()
-        self.assertEquals(isinstance(response.context['user'],LazyObject),True)
+        response = c.get(reverse('edit-user-info'))    
+        self.assertEquals('form' in response.context, True)
+        self.assertEquals(isinstance(response.context['form'],MultiModelForm),True)
+
+    def testInitWithoutModelInstance(self):
+        with self.assertRaises(KeyError):
+            UserProfileMultiForm()
+
+
+    def testValidData(self):
+        user = User.objects.get(username='admin')        
+        profile = user.userprofile
+        form = UserProfileMultiForm(instance={
+            'user': user,
+            'profile': profile,
+            })
+        self.assertTrue(form['user'])
+        self.assertTrue(form['profile'])
+
+        self.assertTrue(('value="%s"' % user.first_name) in str(form['user']['first_name']))
+        self.assertTrue(('value="%s"' % user.last_name) in str(form['user']['last_name']))
+        self.assertTrue(('value="%s"' % user.email) in str(form['user']['email']))
+        self.assertTrue(('value="%s"' % user.userprofile.birth_date) in str(form['profile']['birth_date']))
+        
+        self.assertTrue(user.userprofile.bio in str(form['profile']['bio']))
+        self.assertTrue(('value="%s"' % user.userprofile.skype) in str(form['profile']['skype']))
+        self.assertTrue(('value="%s"' % user.userprofile.jabber) in str(form['profile']['jabber']))
+        self.assertTrue(user.userprofile.other_contacts in str(form['profile']['other_contacts']))
+        
+
+    def testInvalidData(self):
+        user = User(first_name='ter', last_name='akonian', email='wrongemail')
+        userprofile = UserProfile(user=user,bio='b')
+        form = UserProfileMultiForm(instance={
+            'user': user,
+            'profile': user.userprofile,
+            })
+        self.assertFalse(form['user'].is_valid())
+        self.assertFalse(form['profile'].is_valid())
+
+
+
         
