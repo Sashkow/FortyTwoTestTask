@@ -8,6 +8,7 @@ from models import RequestInfo, UserProfile
 
 
 
+
 class NameForm(forms.Form):
     your_name = forms.CharField(label='Your name', max_length=100)
 
@@ -27,16 +28,14 @@ class UserProfileMultiForm(MultiModelForm):
         'profile': UserProfileForm,
     }
 
-    def __init__(self,*args, **kwargs):
-        try:
-            if not 'instance' in kwargs:
-                raise KeyError('UserProfileMultiForm class needs "instance" argument')
-        except KeyError as inst:
-            print inst.args[0]
-            raise
-        super(UserProfileMultiForm, self).__init__(*args, **kwargs)
-
-
+    # def __init__(self,*args, **kwargs):
+    #     try:
+    #         if not 'instance' in kwargs:
+    #             raise KeyError('UserProfileMultiForm class needs "instance" argument')
+    #     except KeyError as inst:
+    #         print inst.args[0]
+    #         raise
+    #     super(UserProfileMultiForm, self).__init__(*args, **kwargs)
 
 
     # def save(self, commit=True):

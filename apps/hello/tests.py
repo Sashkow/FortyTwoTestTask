@@ -10,6 +10,7 @@ from django.conf import settings
 from apps.hello.models import RequestInfo, UserProfile
 from apps.hello.middleware import RequestsToDataBase
 from apps.hello.forms import UserProfileMultiForm
+from apps.hello import views
 
 from django.conf import settings
 from django.utils.functional import LazyObject
@@ -116,6 +117,12 @@ class ContextProcessorTests(TestCase):
         self.assertEquals(type(response.context['django_settings']), \
             type(settings))
 
+
+####################################
+#5
+######################################
+
+
 # Create page with a form that allows to edit data, presented on the main page
 class EditFormTests(TestCase):
     fixtures = ['hello_main_view_testdata.json']
@@ -132,9 +139,9 @@ class EditFormTests(TestCase):
         self.assertEquals('form' in response.context, True)
         self.assertEquals(isinstance(response.context['form'],MultiModelForm),True)
 
-    def testInitWithoutModelInstance(self):
-        with self.assertRaises(KeyError):
-            UserProfileMultiForm()
+    # def testInitWithoutModelInstance(self):
+    #     with self.assertRaises(KeyError):
+    #         UserProfileMultiForm()
 
 
     def testValidData(self):
@@ -169,5 +176,35 @@ class EditFormTests(TestCase):
         self.assertFalse(form['profile'].is_valid())
 
 
+class LoginViewTests(TestCase):
+    fixtures = ['login_testing_data.json']
 
-        
+    def setUp(self):
+        self.factory = RequestFactory()
+
+
+    def testPageLoads(self):
+        c = Client()
+        response = c.get(reverse('login'))
+        self.assertEquals(response.status_code, 200)
+
+    def testPageRedirects(self):
+        c = Client()
+        response = c.post(reverse('login'),{'username':'admin', 'password':'admin'})
+        self.assertEquals(response.status_code, 302)        #check redirects
+        self.assertIn('testserver/', response.url)     #check redirects to main view
+
+    def testPageLogins(self):
+        """test post request to login page authenticates correct user (adds to session)"""
+        c = Client()
+        response = c.post(reverse('login'),{'username':'sashko', 'password':'poland'})
+        user = User.objects.get(username='sashko')
+        self.assertEquals(user.username,'sashko')
+
+
+
+
+
+
+
+

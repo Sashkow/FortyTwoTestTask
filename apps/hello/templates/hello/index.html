@@ -6,14 +6,14 @@
     <link rel="stylesheet" type="text/css" href="/static/hello/style.css">    
 {% endblock %}
 
-
+(r'^$', 'django.contrib.auth.views.redirect_to_login', {'next': '/something'})
 
 {% block content %}
     <div class="left">
         <div>Name: {{u.first_name}}</div>
         <div>Last name: {{u.last_name}}</div>
         <div>Date of birth: {{u.userprofile.birth_date}}</div>
-        <div>Bio: <pre>{{u.userprofile.bio}}</pre></div>
+        <div><img src="http://www.jonathanjeter.com/images/Square_200x200.png"></div>
     </div>
     <div class="right">
         <div>Contacts</div>
@@ -21,8 +21,10 @@
         <div>Jabber: {{u.userprofile.jabber}}</div>
         <div>Skype: {{u.userprofile.skype}}</div>
         <div>Other contacts: <pre>{{u.userprofile.other_contacts}}</pre></div>
+        <div>Bio: <pre>{{u.userprofile.bio}}</pre></div>
     </div>
     <div>
         <a href="{% url 'edit-user-info' %}" name="edit_page_link">Edit this content</a>
+        <a href="{% url 'login' %}" name="login">Login</a>
     </div>
 {% endblock %}
