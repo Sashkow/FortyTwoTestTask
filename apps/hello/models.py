@@ -3,6 +3,8 @@ from django.db import models
 from django.utils import timezone
 from django.contrib.auth.models import User
 
+from stdimage import StdImageField
+
 def content_file_name(instance, filename):
     return '/'.join(['content', instance.user.username, filename])
 
@@ -14,7 +16,8 @@ class UserProfile(models.Model):
     jabber = models.CharField(max_length=50, null=True, blank=True)
     skype = models.CharField(max_length=50, null=True, blank=True)
     other_contacts = models.TextField(null=True, blank=True)
-    ava  = models.FileField(null=True, blank=True, upload_to=content_file_name)
+    ava  = StdImageField(null=True, blank=True, upload_to='users', size=(200, 200))
+
 
 
 class RequestInfo(models.Model):

@@ -57,14 +57,14 @@ def editUserInfo(request):
     userprofile = get_or_create_user_profile(request)
     model_instances = {'user': user, 'profile': userprofile}
     if request.method == 'POST':
-        form = UserProfileMultiForm(request.POST, instance=model_instances)
+        form = UserProfileMultiForm(request.POST, request.FILES, instance=model_instances)
         if form.is_valid():
             form.save()
         return HttpResponseRedirect(reverse('main'))
     else:
         form = UserProfileMultiForm(instance=model_instances)
-    
-    return render(request, 'hello/editform.html', {'form': form})
+    ava_url = settings.MEDIA_URL + str(form['profile']['ava'].value())
+    return render(request, 'hello/editform.html', {'form': form, 'ava_url':ava_url})
 
 def thanks(request):
     return HttpResponse('thanks!')
@@ -77,7 +77,7 @@ def login(request):
             return HttpResponseRedirect(reverse('main'))
     else:
         form = AuthenticationForm()
-    return render(request, 'hello/login.html', {'form': form})    
+    return render(request, 'hello/login.html', {'form': form, 'django_settings': settings})    
 
 
 ###########################################
@@ -92,7 +92,7 @@ def get_user_or_auth_and_get_admin(request):
     except User.DoesNotExist:
         print "Handling unauthorized user", User.DoesNotExist
         u = authenticate(username='admin', password='admin')
-        
+           
         auth.login(request, u)
     finally:
         return u
@@ -106,4 +106,7 @@ def get_or_create_user_profile(request):
         profile = UserProfile(user=user)
         profile.save()
     return profile
+
+
+
 

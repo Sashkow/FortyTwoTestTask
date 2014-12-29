@@ -20,7 +20,7 @@ class UserForm(ModelForm):
 class UserProfileForm(ModelForm):
     class Meta:
         model = UserProfile
-        fields = ['birth_date','bio', 'jabber','skype','other_contacts']
+        fields = ['birth_date','bio', 'jabber','skype','other_contacts','ava']
 
 class UserProfileMultiForm(MultiModelForm):
     form_classes = {

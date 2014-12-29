@@ -13,7 +13,13 @@
         <div>Name: {{u.first_name}}</div>
         <div>Last name: {{u.last_name}}</div>
         <div>Date of birth: {{u.userprofile.birth_date}}</div>
-        <div><img src="http://www.jonathanjeter.com/images/Square_200x200.png"></div>
+        <div>Avatar:</div>
+        {% if url in u.userprofile.ava %}
+            <div><img src="{{u.userprofile.ava.url}}"></div>
+        {% else %}
+            <div><img src="http://www.jonathanjeter.com/images/Square_200x200.png"></div>
+        {% endif %}
+        
     </div>
     <div class="right">
         <div>Contacts</div>

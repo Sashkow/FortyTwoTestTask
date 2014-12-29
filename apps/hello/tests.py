@@ -35,6 +35,7 @@ class MainViewTests(TestCase):
         self.assertEquals(hasattr(u.userprofile, 'skype'), True)
         self.assertEquals(hasattr(u.userprofile, 'other_contacts'), True)
         self.assertEquals(hasattr(u.userprofile, 'birth_date'), True)
+        self.assertEquals(hasattr(u.userprofile, 'ava'), True)
 
     def testMainViewShowsUserInfo(self):
         c = Client()
@@ -139,11 +140,6 @@ class EditFormTests(TestCase):
         self.assertEquals('form' in response.context, True)
         self.assertEquals(isinstance(response.context['form'],MultiModelForm),True)
 
-    # def testInitWithoutModelInstance(self):
-    #     with self.assertRaises(KeyError):
-    #         UserProfileMultiForm()
-
-
     def testValidData(self):
         user = User.objects.get(username='admin')        
         profile = user.userprofile
@@ -182,7 +178,6 @@ class LoginViewTests(TestCase):
     def setUp(self):
         self.factory = RequestFactory()
 
-
     def testPageLoads(self):
         c = Client()
         response = c.get(reverse('login'))
@@ -200,11 +195,4 @@ class LoginViewTests(TestCase):
         response = c.post(reverse('login'),{'username':'sashko', 'password':'poland'})
         user = User.objects.get(username='sashko')
         self.assertEquals(user.username,'sashko')
-
-
-
-
-
-
-
 

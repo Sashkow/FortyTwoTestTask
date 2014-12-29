@@ -8,13 +8,15 @@
 
 
 {% block content %}
-    <form action="{%url 'edit-user-info' %}" method="post">
+    <form enctype="multipart/form-data" action="{%url 'edit-user-info' %}" method="post">
     {% csrf_token %}    
     <div class="left">
         <div>Name: {{form.user.first_name}}</div>
         <div>Last name: {{form.user.last_name}}</div>
         <div>Date of birth: {{form.profile.birth_date}}</div>
-        <div>Bio: <pre>{{form.profile.bio}}</pre></div>
+        <div>Avatar: {{form.profile.ava}}</div> 
+        <div><img src="{{ava_url}}"></div> 
+
     </div>
     <div class="right">
         <div>Contacts</div>
@@ -23,6 +25,7 @@
         <div>Jabber: {{form.profile.jabber}}</div>
         <div>Skype: {{form.profile.skype}}</div>
         <div>Other contacts: <pre>{{form.profile.other_contacts}}</pre></div>
+        <div>Bio: <pre>{{form.profile.bio}}</pre></div>
     </div>
     <input name="save_and_back_submit" type="submit" value="Save and back to Main Page" />
     </form>

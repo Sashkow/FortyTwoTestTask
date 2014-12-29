@@ -1,6 +1,8 @@
 from django.conf.urls import patterns, url
 from apps.hello import views
-(r'^$', 'django.contrib.auth.views.redirect_to_login', {'next': '/something'})
+
+
+# (r'^$', 'django.contrib.auth.views.redirect_to_login', {'next': '/something'})
 
 
 urlpatterns = patterns('',
@@ -13,5 +15,6 @@ urlpatterns = patterns('',
         views.editUserInfo, name='edit-user-info'),
     url(r'^thanks/$', views.thanks, name='thanks'),
     url(r'^login/$', views.login, name='login'),
+
 )
 

@@ -41,6 +41,8 @@ INSTALLED_APPS = (
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'stdimage',
+
     'south',
     'apps.hello',
 )
@@ -59,6 +61,7 @@ MIDDLEWARE_CLASSES = (
 
 
 ROOT_URLCONF = 'fortytwo_test_task.urls'
+
 
 WSGI_APPLICATION = 'fortytwo_test_task.wsgi.application'
 
@@ -89,12 +92,12 @@ USE_TZ = True
 # Upload Media
 # Absolute filesystem path to the directory that will hold user-uploaded files.
 # Example: "/home/media/media.lawrence.com/media/"
-MEDIA_ROOT = os.path.join(BASE_DIR, '..', 'uploads')
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
 # URL that handles the media served from MEDIA_ROOT. Make sure to use a
 # trailing slash.
 # Examples: "http://media.lawrence.com/media/", "http://example.com/media/"
-MEDIA_URL = '/uploads/'
+MEDIA_URL = '/media/'
 
 
 # Static files (CSS, JavaScript, Images)
